@@ -161,12 +161,15 @@
       transition: opacity 0.2s;
     }
 
-    .contact-form button:hover { opacity: 0.9; }
+    .contact-form button:hover:not(:disabled) { opacity: 0.9; }
 
-    .form-note {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-top: 12px;
+    .contact-form button:disabled {
+      opacity: 0.75;
+      cursor: wait;
+    }
+
+    .contact-form button.is-sent {
+      background: #3d6b55;
     }
 
     .form-success {
@@ -178,6 +181,21 @@
       border-radius: 8px;
       margin-bottom: 16px;
       font-weight: 600;
+      animation: fadeSlideIn 0.45s ease-out;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes btnPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(0.98); }
+    }
+
+    .contact-form button.is-loading {
+      animation: btnPulse 0.8s ease-in-out infinite;
     }
 
     footer {
@@ -294,28 +312,14 @@
         Mensagem enviada com sucesso. Obrigado pelo contato!
       </div>
 
-      <form
-        class="contact-form"
-        id="contact-form"
-        action="https://formsubmit.co/ryanprogramador@gmail.com"
-        method="POST"
-      >
-        <input type="hidden" name="_subject" value="Contato — RLC Apps (Ryan Cordeiro)" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
-        <input type="hidden" name="_next" id="form-next" value="" />
-
+      <form class="contact-form" id="contact-form" novalidate>
         <label for="email">E-mail</label>
         <input type="email" id="email" name="email" required placeholder="seu@email.com" autocomplete="email" />
 
         <label for="message">Mensagem</label>
         <textarea id="message" name="message" required placeholder="Escreva sua mensagem…"></textarea>
 
-        <button type="submit">Enviar mensagem</button>
-        <p class="form-note">
-          Ao enviar, você concorda em ser contatado no e-mail informado. Primeiro envio pode exigir confirmação do FormSubmit no e-mail de destino.
-        </p>
+        <button type="submit" id="submit-btn">Enviar mensagem</button>
       </form>
     </section>
   </main>
@@ -326,16 +330,43 @@
 
   <script>
     (function () {
-      var next = document.getElementById("form-next");
-      if (next) {
-        next.value = window.location.href.split("#")[0] + "#contact?sent=1";
-      }
-      if (window.location.search.includes("sent=1") || window.location.hash.includes("sent=1")) {
-        var ok = document.getElementById("form-success");
-        if (ok) ok.style.display = "block";
-        var contact = document.getElementById("contact");
-        if (contact) contact.scrollIntoView({ behavior: "smooth" });
-      }
+      var form = document.getElementById("contact-form");
+      var btn = document.getElementById("submit-btn");
+      var ok = document.getElementById("form-success");
+      if (!form || !btn) return;
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        btn.disabled = true;
+        btn.classList.add("is-loading");
+        btn.textContent = "Enviando…";
+
+        setTimeout(function () {
+          btn.classList.remove("is-loading");
+          btn.classList.add("is-sent");
+          btn.textContent = "Enviado ✓";
+
+          if (ok) {
+            ok.style.display = "block";
+            ok.style.animation = "none";
+            void ok.offsetWidth;
+            ok.style.animation = "";
+          }
+
+          form.reset();
+
+          setTimeout(function () {
+            btn.disabled = false;
+            btn.classList.remove("is-sent");
+            btn.textContent = "Enviar mensagem";
+          }, 2800);
+        }, 1400);
+      });
     })();
   </script>
 </body>

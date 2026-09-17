@@ -1,25 +1,21 @@
-# Site legal e suporte
+# Site legal e suporte — Ryan Cordeiro (RLC)
 
-Site estático único para Google Play e App Store.
+Site estático pessoal para Google Play e App Store. **Sem vínculo com Conceitto Sistemas.**
 
-## URLs para as lojas
-
-Substitua `SEU-USUARIO` e `SEU-REPO` pelo endereço publicado:
+## URLs publicadas
 
 | Campo na loja | URL |
 |---------------|-----|
-| Política de privacidade | `https://SEU-USUARIO.github.io/SEU-REPO/#privacy` |
-| Termos de uso | `https://SEU-USUARIO.github.io/SEU-REPO/#terms` |
-| Suporte / contato | `https://SEU-USUARIO.github.io/SEU-REPO/#contact` |
+| Política de privacidade | `https://ryanprogramador.github.io/app-suporte-legal/#privacy` |
+| Termos de uso | `https://ryanprogramador.github.io/app-suporte-legal/#terms` |
+| Suporte / contato | `https://ryanprogramador.github.io/app-suporte-legal/#contact` |
 
 ## Formulário de contato
 
-Usa [FormSubmit](https://formsubmit.co/) (gratuito). Mensagens vão para `privacidade@comparafotos.com.br`.
+Usa [FormSubmit](https://formsubmit.co/) (gratuito). Mensagens vão para o e-mail pessoal configurado em `index.html`.
 
-No **primeiro** envio, confirme o e-mail que o FormSubmit enviar para essa caixa.
+No **primeiro** envio, confirme o e-mail de ativação que o FormSubmit enviar.
 
-## Publicação (GitHub Pages)
+## Hospedagem
 
-Repositório público, branch `main`, pasta raiz (`/`).
-
-Hospedagem gratuita enquanto a conta GitHub existir (muito além de 3 meses).
+GitHub Pages na conta **RyanProgramador** — gratuito enquanto a conta existir (muito além de 3 meses).
